@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Table Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+    .container {
+      text-align: center;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+    input {
+      padding: 10px;
+      margin: 10px;
+      width: 60px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    table {
+      margin-top: 20px;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table, th, td {
+      border: 1px solid #000;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Dynamic Table Generator</h2>
+    <p>Enter the number of rows and columns to generate a table.</p>
+    
+    <!-- Form for inputting number of rows and columns -->
+    <input type="number" id="rows" placeholder="Rows" min="1" max="100">
+    <input type="number" id="columns" placeholder="Columns" min="1" max="100">
+    <button onclick="generateTable()">Generate Table</button>
+    
+    <!-- Div to display the generated table -->
+    <div id="table-container"></div>
+  </div>
+
+  <script>
+    // Function to generate the table
+    function generateTable() {
+      // Get the number of rows and columns from the user input
+      const rows = document.getElementById('rows').value;
+      const columns = document.getElementById('columns').value;
+
+      // Check if inputs are valid
+      if (rows <= 0 || columns <= 0) {
+        alert('Please enter valid positive numbers for rows and columns.');
+        return;
+      }
+
+      // Get the table container div
+      const tableContainer = document.getElementById('table-container');
+      
+      // Clear any previous table
+      tableContainer.innerHTML = '';
+
+      // Create a table element
+      const table = document.createElement('table');
+
+      // Generate rows and columns dynamically
+      for (let i = 0; i < rows; i++) {
+        const row = document.createElement('tr');
+        for (let j = 0; j < columns; j++) {
+          const cell = document.createElement('td');
+          cell.innerText = `Row ${i+1}, Col ${j+1}`; // Set the cell content
+          row.appendChild(cell);
+        }
+        table.appendChild(row); // Add the row to the table
+      }
+
+      // Append the generated table to the table container div
+      tableContainer.appendChild(table);
+    }
+  </script>
+
+</body>
+</html>

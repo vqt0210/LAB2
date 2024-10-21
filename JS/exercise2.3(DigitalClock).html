@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Clock</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .clock-container {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+    .clock {
+      font-size: 48px;
+      letter-spacing: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="clock-container">
+    <div id="clock" class="clock">00:00:00</div>
+  </div>
+
+  <script>
+    // Function to format time to always show two digits
+    function formatTime(value) {
+      return value < 10 ? '0' + value : value;
+    }
+
+    // Function to update the clock every second
+    function updateClock() {
+      const now = new Date(); // Get current time
+      const hours = formatTime(now.getHours());
+      const minutes = formatTime(now.getMinutes());
+      const seconds = formatTime(now.getSeconds());
+
+      // Update the clock's display
+      document.getElementById('clock').innerText = `${hours}:${minutes}:${seconds}`;
+    }
+
+    // Run the updateClock function every second
+    setInterval(updateClock, 1000);
+
+    // Run the function once to display the clock immediately
+    updateClock();
+  </script>
+
+</body>
+</html>

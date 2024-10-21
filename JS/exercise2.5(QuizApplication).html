@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Application</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f9;
+    }
+    .quiz-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+    }
+    h2 {
+      text-align: center;
+    }
+    .question {
+      margin-bottom: 15px;
+    }
+    .options {
+      margin-bottom: 20px;
+    }
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-container">
+    <h2>Quiz Application</h2>
+    <form id="quizForm">
+      <!-- Questions will be dynamically inserted here -->
+    </form>
+    <button onclick="submitQuiz()">Submit Quiz</button>
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    // Questions, choices, and correct answers stored in an array
+    const quizData = [
+      {
+        question: 'What is the capital of France?',
+        choices: ['Paris', 'London', 'Berlin', 'Madrid'],
+        correct: 'Paris'
+      },
+      {
+        question: 'Which language is used for web development?',
+        choices: ['Python', 'JavaScript', 'C++', 'Java'],
+        correct: 'JavaScript'
+      },
+      {
+        question: 'What is 5 + 3?',
+        choices: ['5', '7', '8', '10'],
+        correct: '8'
+      },
+      {
+        question: 'Who wrote "Hamlet"?',
+        choices: ['Charles Dickens', 'J.K. Rowling', 'William Shakespeare', 'Mark Twain'],
+        correct: 'William Shakespeare'
+      }
+    ];
+
+    const quizForm = document.getElementById('quizForm');
+
+    // Dynamically render the quiz questions
+    function loadQuiz() {
+      quizData.forEach((quizItem, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.classList.add('question');
+        questionDiv.innerHTML = `
+          <p>${index + 1}. ${quizItem.question}</p>
+          <div class="options">
+            ${quizItem.choices.map(choice => `
+              <label>
+                <input type="radio" name="question${index}" value="${choice}" required>
+                ${choice}
+              </label><br>
+            `).join('')}
+          </div>
+        `;
+        quizForm.appendChild(questionDiv);
+      });
+    }
+
+    loadQuiz();
+
+    // Function to handle quiz submission
+    function submitQuiz() {
+      const formData = new FormData(quizForm);
+      let score = 0;
+
+      // Loop through each question and check the user's answer
+      quizData.forEach((quizItem, index) => {
+        const userAnswer = formData.get(`question${index}`);
+        if (userAnswer === quizItem.correct) {
+          score++;
+        }
+      });
+
+      // Display the result
+      const resultDiv = document.getElementById('result');
+      resultDiv.textContent = `You scored ${score} out of ${quizData.length}!`;
+    }
+  </script>
+
+</body>
+</html>
